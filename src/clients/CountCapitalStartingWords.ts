@@ -19,11 +19,15 @@ export default class CountCapitalWordsClient implements ClientInterface {
         return capitalWords.length;
     };
 
-    update(message: String) {
-        console.log(`${this.name} recebeu a atualização: ${message}`);
-        const counter = this.count(message);
-        console.log(`${this.name} encontrou ${counter} palavras iniciadas com letras maiúsculas na mensagem\n\n`);
-        this.messages.push(message);
+    update(message: String, count: any = this.count) {
+        try {
+            console.log(`${this.name} recebeu a atualização: ${message}`);
+            const counter = count(message);
+            console.log(`${this.name} encontrou ${counter} palavras iniciadas com letras maiúsculas na mensagem\n\n`);
+            this.messages.push(message);
+        } catch (error) {
+            return 'Erro'
+        }
     };
 
     showMessages() {

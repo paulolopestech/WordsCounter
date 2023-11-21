@@ -11,14 +11,15 @@ export default class CountWordsClient implements ClientInterface {
     
     count(message: String): Number {
         let trimmedString = message.trim();
-        if (trimmedString === "") {
+        let stringWithoutHyphensUnderscores = trimmedString.replace(/(\s[-_]\s)|([-_]\s)|(\s[-_])/g, ' ');
+        if (trimmedString === "" || stringWithoutHyphensUnderscores === "") {
             return 0;
         }
-        let wordsArray = trimmedString.split(/\s+/);
+        let wordsArray = stringWithoutHyphensUnderscores.split(/\s+/);
         return wordsArray.length;
     };
 
-    update(message: String) {
+    update(message: String, count: any = this.count) {
         console.log(`${this.name} recebeu a atualização: ${message}`);
         const counter = this.count(message);
         console.log(`${this.name} encontrou ${counter} palavras na mensagem\n\n`);
